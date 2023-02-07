@@ -6,8 +6,73 @@ import styles from '@/styles/Home.module.css'
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
-  
+  const wordpress_api_url = "http://localhost:8000/graphql"
 
+  async function getPages() {
+    const pages = await fetch(wordpress_api_url, {
+      method: 'POST',
+
+      headers: {
+        "Content-Type": "application/json"
+      },
+
+      body: JSON.stringify({
+        query: `
+          {
+            pages {
+              edges {
+                node {
+                  slug
+                  authorId
+                  content
+                }
+              }
+            }
+          }
+        `
+      })
+    })
+    let data = await pages.json();
+    console.log(data.data)
+  }
+
+  async function getPosts() {
+    const posts = await fetch(wordpress_api_url, {
+      method: 'POST',
+
+      headers: {
+        "Content-Type": "application/json"
+      },
+
+      body: JSON.stringify({
+        query: `
+          {
+            posts {
+              edges {
+                node {
+                  slug
+                  date
+                  author {
+                    node {
+                      firstName
+                      lastName
+                    }
+                  }
+                  content
+                }
+              }
+            }
+          }
+        `
+      })
+    })
+    let data = await posts.json();
+    console.log(data.data)
+  }
+  
+  getPages()
+  getPosts()
+  
   return (
     <>
       <Head>
