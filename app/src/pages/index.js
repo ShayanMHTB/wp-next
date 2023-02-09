@@ -1,8 +1,7 @@
 import Head from 'next/head'
 
 async function getPages() {
-  const wordpress_api_url = "http://localhost:8000/graphql"
-  const pages = await fetch(wordpress_api_url, {
+  const pages = await fetch(process.env.WORDPRESS_API_URL, {
     method: 'POST',
     headers: {
       "Content-Type": "application/json"
@@ -22,18 +21,16 @@ async function getPages() {
         }
       `
     })
-  }).then((res) => res.json());
+  })
+    .then((res) => res.json())
   
-  return {
-    props: {
-      pages
-    }
-  }
+  // This pages function has the reult after index is rendered and loaded,
+  // find a solution to get the data before the main page is loaded in the browser
+  return pages
 }
 
 export default function Home() {
-  console.log(getPages());
-  
+  const pages = getPages()
   return (
     <>
       <Head>
@@ -42,6 +39,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <hr />
     </>
   )
 }
