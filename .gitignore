@@ -1,17 +1,53 @@
 # ========================================================
-# Ignoring OS Default files
-# ========================================================
-
-.DS_Store
-
-# ========================================================
 # Ignoring Environmental Variables file
 # ========================================================
-
+# Keeping a few credentials for the general project, can be deleted later on
 .env
 
+
 # ========================================================
-# Ignoring Database files
+# .gitignore for Next JS -- app
+# ========================================================
+
+# dependencies
+/app/node_modules
+/app/.pnp
+/app.pnp.js
+
+# testing
+/app/coverage
+
+# next.js
+/app/.next/
+/app/out/
+
+# production
+/app/build
+
+# misc
+/app/.DS_Store
+/app/*.pem
+
+# debug
+/app/npm-debug.log*
+/app/yarn-debug.log*
+/app/yarn-error.log*
+/app/.pnpm-debug.log*
+
+# local env files
+/app/.env*.local
+
+# vercel
+/app/.vercel
+
+# ========================================================
+# .gitignore for WordPress -- cms
+# ========================================================
+
+/cms/wp-content/uploads/**/*
+
+# ========================================================
+# .gitignore for Database -- dbs
 # ========================================================
 
 dbs/*
