@@ -3,7 +3,7 @@
 # ========================================================
 # Keeping a few credentials for the general project, can be deleted later on
 .env
-
+**/.DS_Store
 
 # ========================================================
 # .gitignore for Next JS -- app
