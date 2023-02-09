@@ -1,36 +1,40 @@
 import Head from 'next/head'
 
-async function getPages() {
-  const pages = await fetch(process.env.WORDPRESS_API_URL, {
+import parse from 'html-react-parser'
+
+export async function getStaticProps() {
+  const homePage = await fetch(process.env.WORDPRESS_API_URL, {
     method: 'POST',
     headers: {
-      "Content-Type": "application/json"
+      'Content-Type': 'application/json'
     },
     body: JSON.stringify({
       query: `
         {
-          pages {
-            edges {
-              node {
-                slug
-                authorId
-                content
-              }
-            }
+          page(id: "/home", idType:URI) {
+            slug
+            date
+            title
+            content
           }
         }
       `
     })
-  })
-    .then((res) => res.json())
-  
-  // This pages function has the reult after index is rendered and loaded,
-  // find a solution to get the data before the main page is loaded in the browser
-  return pages
+  }).then((res) => res.json())
+
+  return {
+    props: {
+      homePage,
+    },
+  }
 }
 
-export default function Home() {
-  const pages = getPages()
+export default function Home({ homePage }) {
+  const slug = homePage.data.page.slug
+  const date = homePage.data.page.date
+  const title = homePage.data.page.title
+  const content = homePage.data.page.content
+
   return (
     <>
       <Head>
@@ -40,6 +44,25 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <hr />
+      <div className="flex flex-col items-center p-[5em]">
+        <h1>Home Page content loaded at build time in nextjs</h1>
+        <br />
+        <div>
+          SLUG: { slug }
+        </div>
+        <br />
+        <div>
+          DATE: { date }
+        </div>
+        <br />
+        <div>
+          TITLE: { title }
+        </div>
+        <br />
+        <div>
+          CONTENT: { parse( content ) }
+        </div>
+      </div>
     </>
   )
 }
