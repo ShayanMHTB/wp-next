@@ -1,6 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
+  reactStrictMode: false,
+  env: {
+    WORDPRESS_API_URL: 'http://localhost:8000/graphql'
+  }
 }
 
 module.exports = nextConfig
