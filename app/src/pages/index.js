@@ -24,17 +24,12 @@ export async function getStaticProps() {
 
   return {
     props: {
-      homePage,
+      homePage: homePage.data.page,
     },
   }
 }
 
 export default function Home({ homePage }) {
-  const slug = homePage.data.page.slug
-  const date = homePage.data.page.date
-  const title = homePage.data.page.title
-  const content = homePage.data.page.content
-
   return (
     <>
       <Head>
@@ -48,19 +43,19 @@ export default function Home({ homePage }) {
         <h1>Home Page content loaded at build time in nextjs</h1>
         <br />
         <div>
-          SLUG: { slug }
+          SLUG: { homePage.slug }
         </div>
         <br />
         <div>
-          DATE: { date }
+          DATE: { homePage.date }
         </div>
         <br />
         <div>
-          TITLE: { title }
+          TITLE: { homePage.title }
         </div>
         <br />
         <div>
-          CONTENT: { parse( content ) }
+          CONTENT: { parse( homePage.content ) }
         </div>
       </div>
     </>
